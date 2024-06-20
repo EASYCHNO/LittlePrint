@@ -1,0 +1,34 @@
+﻿<Window x:Class="LittlePrint.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LittlePrint"
+        mc:Ignorable="d"
+        Title="Формирование отчета" Height="250" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="25*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Background="#ff7a70" Grid.Row="0" Grid.ColumnSpan="4" ></Grid>
+        <Grid Background="#f76157" Grid.Row="6" Grid.ColumnSpan="4" />
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label Content="Начальная дата:" FontSize="15"/>
+                <DatePicker x:Name="startDatePicker" FontSize="15"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label Content="Конечная дата:" FontSize="15"/>
+                <DatePicker x:Name="endDatePicker" FontSize="15"/>
+            </StackPanel>
+        </StackPanel>
+        <Button Content="Сформировать отчет" Click="GenerateReportButton_Click" Style="{StaticResource BtnStyle}" Width="200"  Grid.Row="3" Grid.ColumnSpan="2" FontSize="15"/>
+    </Grid>
+</Window>

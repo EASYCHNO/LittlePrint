@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Viewer</title>
+    <script type="module">
+        import pdfjsLib from 'file:///C:/Users/Bulat/source/repos/LittlePrint/LittlePrint/PDFJS/build/pdf.mjs';
+        window.pdfjsLib = pdfjsLib; // Делаем библиотеку доступной глобально
+    </script>
+</head>
+<body>
+    <canvas id="pdf-canvas"></canvas>
+    <script type="module">
+        const pdfjsLib = window.pdfjsLib;
+
+        // Указываем путь к Worker как модуль
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'file:///C:/Users/Bulat/source/repos/LittlePrint/LittlePrint/PDFJS/build/pdf.worker.mjs';
+
+        // Путь к PDF файлу должен быть абсолютным URI или доступным URL
+        var url = 'file:///C:/path/to/your/file.pdf';
+
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function (pdf) {
+            console.log('PDF loaded');
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function (page) {
+                console.log('Page loaded');
+                var scale = 1.5;
+                var viewport = page.getViewport({ scale: scale });
+                var canvas = document.getElementById('pdf-canvas');
+                var context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                var renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                var renderTask = page.render(renderContext);
+                renderTask.promise.then(function () {
+                    console.log('Page rendered');
+                });
+            });
+        }, function (reason) {
+            console.error('PDF loading error: ' + reason);
+        });
+    </script>
+</body>
+</html>
